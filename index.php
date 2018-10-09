@@ -19,7 +19,6 @@ use DiDom\Document;
 use DiDom\Element;
 
 
-
 $url = "https://diemthi.tuyensinh247.com/diem-chuan.html";
 $allLink;
 $data=[];
@@ -27,14 +26,11 @@ $postURL = "https://diemthi.tuyensinh247.com/diem-chuan/dai-hoc-bach-khoa-ha-noi
 $current=0;
 $index=0;
 get_link($url, $allLink);
-//export_csv($data);
-//export_excel($data);
 get_detail($allLink,array('y'=>'2013'),$data);
 export_excel($data);
 function export_excel($data)
 {
     $spreadsheet = new Spreadsheet();
-
 //Specify the properties for this document
     $spreadsheet->getProperties()
         ->setTitle('Sheet');
@@ -62,29 +58,19 @@ function export_excel($data)
             $spreadsheet->getActiveSheet()->getStyle('E'. ($i + 1))
                 ->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_RED);
         }
-
-
-
     }
-
     $writer = IOFactory::createWriter($spreadsheet, "Xlsx"); //Xls is also possible
     $filename = "dai_hoc_ha_tinh.xlsx";
     $path = __DIR__ . '/files/' . $filename;
-
     $writer->save($path);
-
 }
 
 
 function get_detail($link,$parameter,&$data)
 {
-
-
     foreach ($link as $detail) {
         $baseURL = "https://diemthi.tuyensinh247.com";
         $strUrl = $baseURL . $detail;
-//        $html = $multi_curl->addGet($strUrl, $parameter);
-
         get_data($strUrl, $parameter,$data);
     }
 }
@@ -112,9 +98,7 @@ function get_data($url,$parameter, &$data)
             $result["point"] = $td[4]->text();
             $data[] = $result;
         }
-
     }
-
 }
 
 function get_link($url, &$data)
@@ -131,28 +115,7 @@ function get_link($url, &$data)
     for ($i = 0; $i < count($child); ++$i) {
         $e = $child[$i];
         $href = $e->find('a')[0]->href;
-        echo $href."\n";
         $data[] = $href;
-    }
-}
-
-class point
-{
-    private $data;
-
-    public function __construct($data)
-    {
-        $this->data = $data;
-    }
-
-    public function __get($name)
-    {
-        // TODO: Implement __get() method.
-    }
-
-    public function __set($name, $value)
-    {
-        // TODO: Implement __set() method.
     }
 }
 

@@ -24,7 +24,4 @@ The excel file was created in the directory:
 ```
 $ cd lookupscores/files/
 ```
-Thanks for watching 
-
-Coding by Le Dung
-
+Thanks!
